@@ -11,7 +11,9 @@ find_package(catkin REQUIRED
   geometry_msgs
 )
 
-catkin_package()
+catkin_package(
+  CATKIN_DEPENDS roscpp tf2_eigen tf2_ros param_io geometry_msgs
+)
 
 add_executable(projected_transform_publisher_node
   src/projected_transform_publisher_node.cpp

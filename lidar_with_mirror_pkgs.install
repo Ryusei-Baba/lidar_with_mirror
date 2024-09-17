@@ -7,6 +7,18 @@
     local-name: ypspur
     version: noetic-devel
 - git:
+    uri: https://github.com/openspur/ypspur_ros
+    local-name: ypspur_ros
+    version: master
+- git:
     uri: https://github.com/open-rdc/adi_driver
     local-name: adi_driver
+    version: master
+- git:
+    uri: https://github.com/ANYbotics/any_node.git
+    local-name: any_node
+    version: master
+- git:
+    uri: https://github.com/ANYbotics/message_logger.git
+    local-name: message_logger
     version: master
