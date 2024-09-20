@@ -3,28 +3,29 @@
 <launch>
   <arg name="output" default="screen"/>
   <arg name="ypspur_serial_port" default="/dev/sensors/icart-mini"/>
-  <node pkg="ypspur_ros" type="ypspur_ros" name="ypspur_ros" output="$(arg output)" respawn="true">
+
+  <include file="$(find icart_mini_driver)/launch/icart_mini_drive.launch">
     <rosparam command="load" file="$(find lidar_with_mirror_bringup)/config/ypspur_ros.yaml" subst_value="true"/>
     <param name="param_file" value="$(find lidar_with_mirror_bringup)/config/ypspur/box_v3.param"/>
     <param name="port" value="$(arg ypspur_serial_port)"/>
-  </node>
+  </include>
 
   <include file="$(find lidar_with_mirror_bringup)/launch/includes/base.launch.xml"/>
   <include file="$(find lidar_with_mirror_bringup)/launch/includes/description.launch.xml"/>
   <include file="$(find lidar_with_mirror_bringup)/launch/includes/teleop_joy.launch"/>
-  <!--
-  <include file="$(find lidar_with_mirror_bringup)/launch/includes/adis_rcv_csv_orne.launch"/>
-  <include file="$(find lidar_with_mirror_bringup)/launch/includes/adis16465.launch"/>
-  -->
-  <!-- <include file="$(find lidar_with_mirror_bringup)/launch/includes/rfans16.launch"/>
+  <!-- <include file="$(find lidar_with_mirror_bringup)/launch/includes/adis_rcv_csv_orne.launch"/> -->
+  <!-- <include file="$(find lidar_with_mirror_bringup)/launch/includes/adis16465.launch"/> -->
+  <include file="$(find lidar_with_mirror_bringup)/launch/includes/rfans16.launch"/>
+  <include file="$(find lidar_with_mirror_bringup)/launch/includes/urg_lidar.launch"/>
+  <include file="$(find lidar_with_mirror_control)/launch/lidar_with_mirror_control.launch" />
+
   <include file="$(find lidar_with_mirror_bringup)/launch/includes/cost_cloud_postprocessor.launch">
     <arg name="cloud_source" default="/rfans/surestar_points"/>
     <arg name="output_frame_id" default="surestar"/>
-  </include> -->
-  <!-- <include file="$(find lidar_with_mirror_bringup)/launch/includes/urg_lidar.launch"/> -->
+  </include>
 
   <node pkg="lidar_with_mirror_bringup" type="projected_transform_publisher_node" name="projected_transform_publisher" output="$(arg output)"/>
   
-  <!-- <node name="estimate_posture" pkg="lidar_with_mirror" type="estimate_posture.py"/> -->
+  <node name="estimate_posture" pkg="lidar_with_mirror" type="estimate_posture.py"/>
   <!-- <node name="rviz" pkg="rviz" type="rviz" args="-d $(find lidar_with_mirror_bringup)/rviz/rviz.rviz"/> -->
 </launch>
